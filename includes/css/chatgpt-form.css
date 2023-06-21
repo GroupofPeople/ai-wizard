@@ -1,0 +1,7 @@
+#ai-wizard-waiting-message{
+    visibility: hidden;
+}
+
+form.submitting #ai-wizard-waiting-message{
+    visibility: visible;
+}

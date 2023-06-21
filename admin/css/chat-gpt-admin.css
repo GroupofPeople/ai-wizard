@@ -1,0 +1,262 @@
+.contact-form-editor-box-mail span.mailtag.used {
+    color: #666;
+}
+
+#chatGPT-panel span.mailtag {
+    display: inline-block;
+    margin: 0 0 0 4px;
+    padding: 1px 2px;
+    cursor: pointer;
+    color: #000;
+}
+
+#container-response-filter-regex {
+    display: flex;
+}
+
+span.mailtag {
+    display: inline-block;
+    margin: 0 0 0 4px;
+    padding: 1px 2px;
+    cursor: pointer;
+    color: #000;
+}
+
+.readonlyInput {
+    background-color: #f0f0f1;
+    padding: 0 8px;
+    line-height: 2;
+    min-height: 30px;
+    box-shadow: 0 0 0 transparent;
+    border-radius: 4px;
+    border: 1px solid #8c8f94;
+    color: #2c3338;
+    margin: 0 1px;
+    font-size: 14px;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+
+.pretty-tags{
+    font-family: Consolas,Monaco,monospace;
+    direction: ltr;
+    unicode-bidi: embed;
+}
+
+.dashicons{
+    margin-top: 5px;
+}
+.chat-gpt-page{
+    padding-top: 1px;
+}
+
+.separator{
+    border: 1px solid black;
+    height: 0;
+    margin: 1rem 0;
+}
+
+td .control{
+    margin: 0.2rem 0;
+}
+
+
+section.page h2{
+    font-size: 1.5rem !important;
+}
+
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 3em;
+    height: 1.5em;
+/*    19px 34px => 1,79*/
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 1.1em;
+    width: 1.1em;
+    left: 0.2em;
+    bottom: 0.2em;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(1.5em);
+    -ms-transform: translateX(1.5em);
+    transform: translateX(1.5em);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 0.75em;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.enable-container{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    margin: 1rem 0px;
+}
+
+.enable-container label{
+    font-weight: bold;
+}
+
+/*
+
+Number Slider
+
+*/
+
+.numberslidercontainer {
+    width: 100%;
+}
+
+.numbercontainer {
+    max-width: 6em;
+}
+
+/* The slider itself */
+.numberslider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 0em; /* Specified height */
+    border: 1px solid #b5b5b5;
+    background: #b5b5b5; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+    margin-top: 1em;
+}
+
+.numberslidercontainer input.input{
+    max-width: 2rem;
+}
+
+/* Chrome, Safari, Edge, Opera */
+.numbercontainer input::-webkit-outer-spin-button,
+.numbercontainer input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+.numbercontainer input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Mouse-over effects */
+.numberslider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.numberslider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 1.5em; /* Set a specific slider handle width */
+    height: 1.5em; /* Slider handle height */
+    background: blue; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+    border-radius: 50%;
+    border-color: transparent;
+    box-shadow: 0.15em 0.15em 0.2em black;
+}
+
+.numberslider::-moz-range-thumb {
+    width: 1.5em; /* Set a specific slider handle width */
+    height: 1.5em; /* Slider handle height */
+    background: blue; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+    border-radius: 50%;
+    border-color: transparent;
+    box-shadow: 0.15em 0.15em 0.2em black;
+}
+
+.half-width {
+    max-width: 50%;
+    width: 50%;
+}
+
+.select.full-width, .select.full-width select{
+    width: 100%;
+}
+
+.temp-container{
+    display: flex;
+    width: 100%;
+    gap: 1em;
+}
+
+.numberslidercontainer .icon-text{
+    margin-top: 1em;
+}
+
+#gofp-wpcf7-chatgpt-max-tokens{
+    max-width: 10em;
+}
+label[for="gofp-wpcf7-chatgpt-max-tokens-bool"]{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#gofp-wpcf7-chatgpt-max-tokens{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    right: 20%;
+    transform: translateY(-50%);
+}
+
+.childs-centered{
+    margin-top: 1.5em;
+position: relative;
+}
+
+.childs-centered.icon-text{
+    margin-top: 1em;
+}
