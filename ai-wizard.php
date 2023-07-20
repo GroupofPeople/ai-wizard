@@ -1,14 +1,15 @@
 <?php
 
 /*
-Plugin Name: AI-Wizard
-Plugin URI: http://URI_Of_Page_Describing_Plugin_and_Updates
-Description: A brief description of the Plugin.
-Version: 0.9.5
-Author: alex
-Author URI: http://URI_Of_The_Plugin_Author
-License: A "Slug" license name e.g. GPL2
-*/
+ * Plugin Name:     AI-Wizard
+ * Plugin URI:      https://ai-wizard.groupofpeople.net/
+ * Description:     AI-Wizard is a powerful WordPress plugin that seamlessly integrates OpenAI's ChatGPT technology with Contact Form 7 (CF7) forms.
+ * Version:         1.0.0
+ * Author:          GroupOfPeople-Alex
+ * License:         GPL3
+ * Text Domain:     ai-wizard
+ * Domain Path:     /languages
+ */
 
 // Exit if accessed directly.
 

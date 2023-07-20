@@ -51,7 +51,7 @@ span.mailtag {
     padding-top: 1px;
 }
 
-.separator{
+.separator, .ai-wizard-separator{
     border: 1px solid black;
     height: 0;
     margin: 1rem 0;
@@ -84,6 +84,15 @@ section.page h2{
 }
 
 /* The slider */
+
+.enable-container-disabled,
+.enable-container-disabled label,
+.enable-container-disabled .slider
+{
+    cursor: default;
+    opacity: 80%;
+}
+
 .slider {
     position: absolute;
     cursor: pointer;
@@ -259,4 +268,33 @@ position: relative;
 
 .childs-centered.icon-text{
     margin-top: 1em;
+}
+.ai-wizard-popup {
+    position: relative;
+    display: inline-block;
+}
+
+.ai-wizard-popup .popup-content {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    background-color: white;
+    color: #fff;
+    width: 200px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid black;
+    text-align: left;
+}
+
+.ai-wizard-popup.open .popup-content {
+    display: block;
+}
+
+body:not(.tooltip-open) {
+    cursor: default;
+}
+
+.ai-wizard-popup.open .popup-text {
+    cursor: auto;
 }

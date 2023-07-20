@@ -2,7 +2,7 @@
 
 namespace AI_Wizard;
 
-use AI_Wizard\Admin\ChatGPT_Panel_Functions;
+use AI_Wizard\Admin\AI_Wizard_Panel;
 use AI_Wizard\Admin\Settings_Page;
 use AI_Wizard\Includes\Post_Handler;
 use AI_Wizard\Includes\Scripts;
@@ -33,7 +33,7 @@ class Plugin {
 			return;
 		}
 
-		new ChatGPT_Panel_Functions();
+		new AI_Wizard_Panel();
 		new Settings_Page();
 	}
 

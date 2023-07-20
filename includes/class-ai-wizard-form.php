@@ -4,11 +4,10 @@ namespace AI_Wizard\Includes;
 
 use ErrorException;
 
-class AI_Wizard_From {
+class AI_Wizard_Form {
 
 	private static $METADATA_KEY_ENABLED = 'ai-wizard_is_active';
 	private static $METADATA_KEY_SETTINGS = 'ai-wizard_settings';
-
 
 	private $form_id;
 
@@ -26,6 +25,29 @@ class AI_Wizard_From {
 
 	private function __construct() {
 
+	}
+
+	public static function once_enabled() {
+		$args = array( 'post_type' => 'wpcf7_contact_form', 'posts_per_page' => - 1 );
+
+		if ( $forms = get_posts( $args ) ) {
+			foreach ( $forms as $form ) {
+				if ( self::getInstance( $form->ID )->is_enabled() ) {
+					return true;
+				}
+			}
+			return false;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns whether the extension is enabled for the form
+	 * @return bool
+	 */
+	public function is_enabled() {
+		return $this->enabled;
 	}
 
 	/**
@@ -131,14 +153,6 @@ class AI_Wizard_From {
 	}
 
 	/**
-	 * Returns whether the extension is enabled for the form
-	 * @return bool
-	 */
-	public function is_enabled() {
-		return $this->enabled;
-	}
-
-	/**
 	 * Function to activate the AI Wizard form extension for the corresponding form
 	 */
 	public function enable() {
@@ -146,7 +160,9 @@ class AI_Wizard_From {
 		if ( $this->enabled ) {
 			return;
 		}
-		//ToDo: add licence blocking
+		if (self::once_enabled()) {
+			return;
+		}
 		$this->enabled = true;
 		$this->update_enable();
 	}
@@ -186,14 +202,31 @@ class AI_Wizard_From {
 	}
 
 	private function update_metadata_settings() {
-		$settings = array(
+		$settings       = array(
 			'chat-gpt-settings' => $this->chat_gpt_settings,
 			'messages'          => $this->messages,
 			'prompt'            => $this->prompt,
 			'system-prompt'     => $this->system_prompt,
 			'response-filter'   => $this->response_filter,
 		);
+		$caller         = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 2 )[1];
+		$callerFunction = $caller['function'];
+		$callerClass    = isset( $caller['class'] ) ? $caller['class'] : '';
+		$callerFile     = $caller['file'];
+		$callerLine     = $caller['line'];
+
+		error_log( "Caller function: {$callerFunction}" );
+		error_log( "Caller class: {$callerClass}" );
+		error_log( "Caller file: {$callerFile}" );
+		error_log( "Caller line: {$callerLine}" );
+		$startTime = microtime( true );
+
 		update_post_meta( $this->form_id, self::$METADATA_KEY_SETTINGS, $settings );
+
+		$endTime       = microtime( true );
+		$executionTime = $endTime - $startTime;
+
+		error_log( 'update_post_meta time: ' . $executionTime );
 	}
 
 	/**

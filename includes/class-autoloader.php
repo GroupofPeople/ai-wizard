@@ -9,24 +9,17 @@ class Autoloader {
 	}
 
 	public function load_class( $className ) {
-		$pathArray = explode( '\\', $className );
+		if ( strpos( $className, 'AI_Wizard\\' ) !== 0 ) {
+			return; // Class does not belong to the AI_Wizard namespace, exit early
+		}
 
-		if ( 0 == strcmp( $pathArray[0], 'AI_Wizard' ) ) {
-			array_shift( $pathArray );
+		$namespaceParts = explode( '\\', $className );
+		$classFileName  = 'class-' . str_replace( '_', '-', strtolower( end( $namespaceParts ) ) ) . '.php';
+		$relativePath   = implode( DIRECTORY_SEPARATOR, array_slice( $namespaceParts, 1, - 1 ) );
+		$filePath       = gofpChatGPTPath . DIRECTORY_SEPARATOR . ( $relativePath ? strtolower( $relativePath ) . DIRECTORY_SEPARATOR : '' ) . $classFileName;
 
-			$classPath = '';
-			$fileName  = array_pop( $pathArray );
-
-			foreach ( $pathArray as $value ) {
-				$classPath .= DIRECTORY_SEPARATOR;
-				$classPath .= strtolower( $value );
-			}
-
-			$fileName  = str_replace( '_', '-', strtolower( $fileName ) );
-			$classPath .= DIRECTORY_SEPARATOR . 'class-' . $fileName . '.php';
-
-
-			include_once gofpChatGPTPath . $classPath;
+		if ( file_exists( $filePath ) ) {
+			include_once $filePath;
 		}
 	}
 }

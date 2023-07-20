@@ -21,63 +21,70 @@ class OpenAI_API {
 	/**
 	 * @throws Exception
 	 */
-	public function call( $prompt, $system, $args = array() ) {
-		//define request body
-		$body_array = array(
-			'model'       => 'gpt-3.5-turbo',
-			'messages'    => array(
-				(object) array(
-					'role'    => 'system',
-					'content' => $system
-				),
-				(object) array(
-					'role'    => 'user',
-					'content' => $prompt
-				)
-			),
-			'temperature' => 0.3
-		);
+	public function call($prompt, $system, $args = []) {
+		$defaultArgs = [
+			'temp' => 0.3,
+		];
 
-		if ( isset( $args['temp'] ) ) {
-			$body_array['temperature'] = (float) $args['temp'];
+		$args = array_merge($defaultArgs, $args);
+
+		$messages = [
+			(object) [
+				'role' => 'system',
+				'content' => $system,
+			],
+			(object) [
+				'role' => 'user',
+				'content' => $prompt,
+			],
+		];
+
+		$body = (object) [
+			'model' => 'gpt-3.5-turbo',
+			'messages' => $messages,
+			'temperature' => (float) $args['temp'],
+		];
+
+		if (isset($args['top-p'])) {
+			$body->top_p = (float) $args['top-p'];
 		}
 
-		if ( isset( $args['top-p'] ) ) {
-			$body_array['top_p'] = (float) $args['top-p'];
+		if (isset($args['max_tokens']) && $args['max_tokens'] !== 'off' && isset($args['max-tokens'])) {
+			$body->max_tokens = $args['max-tokens'];
 		}
 
-		if ( isset( $args['max_tokens'] ) && 'off' != $args['max_tokens'] && isset( $args['max-tokens'] ) ) {
-			$body_array['max_tokens'] = $args['max-tokens'];
-		}
+		$headers = [
+			'Content-Type' => 'application/json',
+			'Authorization' => 'Bearer ' . get_option('CF7ChatGPT_settings')['CF7ChatGPT_api_key'],
+		];
 
-		$body = (object) $body_array;
-
-		//define request
-		$args = array(
+		$requestArgs = [
 			'timeout' => 30,
-			'headers' => array(
-				'Content-Type'  => 'application/json',
-				'Authorization' => 'Bearer ' . get_option( 'CF7ChatGPT_settings' )['CF7ChatGPT_api_key']
-			),
-			'body'    => json_encode( $body )
-		);
+			'headers' => $headers,
+			'body' => wp_json_encode($body),
+		];
 
-		//make request
-		$response = wp_remote_post( self::API_URL, $args );
+		$response = wp_remote_post(self::API_URL, $requestArgs);
 
-		if ( is_wp_error( $response ) ) {
-			error_log( "ERROR wp_remote_post: \n" . print_r( $response, true ) );
-
+		if (is_wp_error($response)) {
+			error_log("ERROR wp_remote_post: \n" . print_r($response, true));
 			return false;
 		}
 
-		$response_body = json_decode( wp_remote_retrieve_body( $response ) );
+		$responseCode = wp_remote_retrieve_response_code($response);
+		$responseBody = wp_remote_retrieve_body($response);
 
-		if ( isset( $response_body->error ) ) {
-			throw new Exception( "ERROR OpenAI API: " . print_r( $response_body->error->message, true ) );
+		if ($responseCode !== 200) {
+			error_log("ERROR API response code: {$responseCode}");
+			return false;
 		}
 
-		//extract body of request and write it to temp file -> audio data
-		return $response_body->choices[0]->message->content;
+		$responseJson = json_decode($responseBody);
+
+		if (isset($responseJson->error)) {
+			throw new Exception("ERROR OpenAI API: " . $responseJson->error->message);
+		}
+
+		return $responseJson->choices[0]->message->content;
 	}
 }
