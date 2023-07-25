@@ -60,6 +60,21 @@ class AI_Wizard_Form {
 
 			return $instance;
 		}
+		if ( $form_id == - 1 ) {
+			global $wpdb;
+
+			$query = "SELECT ID FROM $wpdb->posts ORDER BY ID DESC LIMIT 0,1";
+
+			$result  = $wpdb->get_results( $query );
+			$row     = $result[0];
+			$id      = $row->ID;
+			$post_id = $id + 1;
+
+			$instance = new self();
+			$instance->set_defaults();
+
+			return $instance;
+		}
 
 		if ( ! get_post_status( $form_id ) ) {
 			//ToDo: Exception

@@ -279,12 +279,15 @@ position: relative;
     position: absolute;
     z-index: 1;
     background-color: white;
-    color: #fff;
+    color: #000000;
     width: 200px;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid black;
     text-align: left;
+}
+.ai-wizard-popup .popup-content h3{
+    font-weight: bold;
 }
 
 .ai-wizard-popup.open .popup-content {

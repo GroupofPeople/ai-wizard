@@ -1,5 +1,5 @@
 (function ($) {
-    $(document).ready(function (){
+    $(document).ready(function () {
         $('input[type=checkbox][name="ai-wizard[active]"]').change(function () {
             if (this.checked) {
                 $('div.ai-wizard-content').css("display", "block");
@@ -7,7 +7,6 @@
                 $('div.ai-wizard-content').css("display", "none");
             }
         });
-
 
         $(document).on('click', function (event) {
             var tooltips = $('.ai-wizard-popup');

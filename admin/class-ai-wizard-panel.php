@@ -12,9 +12,7 @@ class AI_Wizard_Panel {
 		add_filter( 'wpcf7_editor_panels', array( $this, 'add_editor_panel' ) );
 		add_action( 'wpcf7_save_contact_form', array( $this, 'save_contact_form' ), 1, 3 );
 		add_action( 'deleted_post', array( $this, 'delete_form' ), 1, 2 );
-		add_action( 'admin_enqueue_scripts', function (){
-			wp_enqueue_script( "ai-wizard-cf7-admin", plugins_url( "/admin/js/ai-wizard-cf7-admin.js", gofpChatGPTFile ), array( 'jquery' ));
-		});
+		add_action( 'admin_enqueue_scripts', array($this, 'enqueue'));
 		$this->enqueue_sections();
 	}
 
@@ -35,17 +33,6 @@ class AI_Wizard_Panel {
 	public function save_contact_form( $contact_form, $args, $context ) {
 		$post_id = $args['id'];
 
-		if ( $post_id == - 1 ) {
-			global $wpdb;
-
-			$query = "SELECT ID FROM $wpdb->posts ORDER BY ID DESC LIMIT 0,1";
-
-			$result  = $wpdb->get_results( $query );
-			$row     = $result[0];
-			$id      = $row->ID;
-			$post_id = $id + 1;
-		}
-
 		$ai_wizard_form = AI_Wizard_Form::getInstance( $post_id );
 
 		foreach ( $this->sections as $section ) {
@@ -54,14 +41,18 @@ class AI_Wizard_Panel {
 	}
 
 
-	private function enqueue() {
-		wp_enqueue_style( "ai-wizard-cf7-admin", plugins_url( "/admin/css/ai-wizard-cf7-admin.css", gofpChatGPTFile ), array() );
-		wp_enqueue_style( "ai_wizard_bulma_css", plugins_url( "/admin/css/bulma.css", gofpChatGPTFile ), array() );
+	public function enqueue() {
+		global $pagenow;
+
+		if($pagenow === 'admin.php' && isset($_GET['page']) && ($_GET['page'] === 'wpcf7' || $_GET['page'] === 'wpcf7-new')){
+			wp_enqueue_script( "ai-wizard-cf7-admin", plugins_url( "/admin/js/ai-wizard-cf7-admin.js", gofpChatGPTFile ), array( 'jquery' ));
+			wp_enqueue_style( "ai-wizard-cf7-admin", plugins_url( "/admin/css/ai-wizard-cf7-admin.css", gofpChatGPTFile ), array() );
+//			wp_enqueue_style( "ai_wizard_bulma_css", plugins_url( "/admin/css/bulma.css", gofpChatGPTFile ), array() );
+		}
 	}
 
 	public function add_editor_panel( $panels ) {
 
-//	    $keys = array_keys($panels);
 		$insertIndex = count( $panels ) - 1;
 
 		$newPanels = array();
@@ -119,10 +110,8 @@ class AI_Wizard_Panel {
 
 		// Remove white spaces and line breaks
 		$html = preg_replace( '/\s+/', ' ', $html );
-		$html = str_replace( [ "\r", "\n" ], '', $html );
 
-		error_log($html);
-		return $html;
+		return str_replace( [ "\r", "\n" ], '', $html );
 	}
 
 

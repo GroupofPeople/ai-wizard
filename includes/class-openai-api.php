@@ -13,7 +13,6 @@ class OpenAI_API {
 		if ( is_null( static::$instance ) ) {
 			static::$instance = new static();
 		}
-		WC()->checkout()->get_posted_data();
 		return static::$instance;
 	}
 
@@ -55,7 +54,7 @@ class OpenAI_API {
 
 		$headers = [
 			'Content-Type' => 'application/json',
-			'Authorization' => 'Bearer ' . get_option('CF7ChatGPT_settings')['CF7ChatGPT_api_key'],
+			'Authorization' => 'Bearer ' . get_option('AI_Wizard_OpenAI_settings')['AIWizard_OpenAI_settings_api_key'],
 		];
 
 		$requestArgs = [
@@ -76,6 +75,7 @@ class OpenAI_API {
 
 		if ($responseCode !== 200) {
 			error_log("ERROR API response code: {$responseCode}");
+			error_log("ERROR API response body: {$responseBody}");
 			return false;
 		}
 
