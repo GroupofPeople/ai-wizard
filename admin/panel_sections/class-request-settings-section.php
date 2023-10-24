@@ -7,11 +7,11 @@ class Request_Settings_Section extends Panel_Section {
 	public function render_section( $ai_wizard_form, $post ) {
 		?>
         <section class="page">
-            <h2><?php echo __('Request Settings', 'ai-wizard');?></h2>
+            <h2><?php esc_html_e('Request Settings', 'ai-wizard');?></h2>
             <fieldset>
                 <legend>
 					<?php
-					echo esc_html( __( "In the following fields, you can use these tags:", 'ai-wizard' ) );
+                    esc_html_e( "In the following fields, you can use these tags:", 'ai-wizard' );
 					echo '<br />';
 					$post->suggest_mail_tags( 'mail' );
 					?>
@@ -35,12 +35,12 @@ class Request_Settings_Section extends Panel_Section {
 		?>
         <tr>
             <th scope="row">
-                <label class="label" for="<?php echo self::PREFIX; ?>-prompt"><?php echo __('Prompt', 'ai-wizard');?></label>
+                <label class="label" for="<?php echo self::PREFIX; ?>-prompt"><?php esc_html_e('Prompt', 'ai-wizard');?></label>
             </th>
             <td>
                 <textarea id="<?php echo self::PREFIX; ?>-prompt" name="<?php echo self::PREFIX; ?>[prompt-template]"
                           class="textarea pretty-tags">
-                    <?php echo $ai_wizard_form->get_prompt() ?>
+                    <?php echo esc_html($ai_wizard_form->get_prompt()); ?>
                 </textarea>
                 <div>
 					<?php $this->tool_tip( __('Enter your user prompt using custom tags to embed user input via tags for a personalized response.', 'ai-wizard') ); ?>
@@ -55,11 +55,11 @@ class Request_Settings_Section extends Panel_Section {
         <tr>
             <th scope="row">
                 <label class="label"
-                       for="<?php echo self::PREFIX; ?>-system-prompt"><?php echo esc_html( __( 'System Prompt', 'ai-wizard' ) ); ?></label>
+                       for="<?php echo self::PREFIX; ?>-system-prompt"><?php esc_html_e( 'System Prompt', 'ai-wizard' ); ?></label>
             </th>
             <td>
             <textarea id="<?php echo self::PREFIX; ?>-system-prompt" name="<?php echo self::PREFIX; ?>[system-prompt]"
-                      class="textarea"><?php echo $ai_wizard_form->get_system_prompt() ?></textarea>
+                      class="textarea"><?php echo esc_html($ai_wizard_form->get_system_prompt()); ?></textarea>
                 <div>
                     <?php $this->tool_tip( __('Provide additional context information for the creation of the response by Chat GPT.', 'ai-wizard'));?>
                 </div>
@@ -74,7 +74,7 @@ class Request_Settings_Section extends Panel_Section {
         <tr>
             <th scope="row">
                 <label class="label" for="<?php echo self::PREFIX; ?>-response-filter">
-					<?php echo esc_html( __( 'Filter API Response', 'ai-wizard' ) ); ?>
+					<?php esc_html_e( 'Filter API Response', 'ai-wizard' ); ?>
                 </label>
             </th>
             <td>
@@ -83,7 +83,7 @@ class Request_Settings_Section extends Panel_Section {
                         <input type="radio" name="<?php echo self::PREFIX; ?>[response-filter]"
                                id="<?php echo self::PREFIX; ?>[response-filter]-text"
                                value="text" <?php echo $current_response_filter == "text" ? "checked" : "" ?>/>
-                        <?php echo __('Use complete Text','ai-wizard');?>
+                        <?php esc_html_e('Use complete Text','ai-wizard');?>
                     </label>
                 </div>
                 <div class="control">
@@ -91,7 +91,7 @@ class Request_Settings_Section extends Panel_Section {
                         <input type="radio" name="<?php echo self::PREFIX; ?>[response-filter]"
                                id="<?php echo self::PREFIX; ?>[response-filter]-number"
                                value="number" <?php echo $current_response_filter == "number" ? "checked" : ""; ?>/>
-                        <?php echo __('Use First number of Response','ai-wizard');?>
+                        <?php esc_html_e('Use First number of Response','ai-wizard');?>
                     </label>
                 </div>
             </td>

@@ -68,7 +68,7 @@ class Settings_Page {
 		$options = get_option( 'AI_Wizard_OpenAI_settings' );
 		?>
         <input type='text' style="width: 30em" name='AI_Wizard_OpenAI_settings[AIWizard_OpenAI_settings_api_key]'
-               value='<?php echo $options['AIWizard_OpenAI_settings_api_key']; ?>'/>
+               value='<?php echo esc_attr($options['AIWizard_OpenAI_settings_api_key']); ?>'/>
 		<?php
 	}
 

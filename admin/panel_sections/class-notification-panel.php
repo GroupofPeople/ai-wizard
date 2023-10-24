@@ -27,7 +27,7 @@ class Notification_Panel extends Panel_Section {
 		?>
 
         <section class="page">
-            <h2><?php echo __( 'Notifications', 'ai-wizard' );?></h2>
+            <h2><?php esc_html_e( 'Notifications', 'ai-wizard' );?></h2>
             <br>
             <fieldset>
 				<?php foreach ( $messages as $key => $message ) { ?>
@@ -38,7 +38,7 @@ class Notification_Panel extends Panel_Section {
                         <div class="control">
                             <input id="<?php echo self::PREFIX . '-' . $key; ?>"
                                    name="<?php echo self::PREFIX . '[' . $key . ']'; ?>"
-                                   class="input" value="<?php echo $message; ?>">
+                                   class="input" value="<?php echo esc_attr($message); ?>">
                         </div>
 						<?php $this->tool_tip( $this->tool_tips[ $key ] ); ?>
                     </div>

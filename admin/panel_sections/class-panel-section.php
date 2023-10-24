@@ -14,8 +14,8 @@ abstract class Panel_Section {
 		<div class="ai-wizard-popup">
         <span class="popup-text">Upgrade
             <span class="popup-content">
-                <h3><?php echo $title ?></h3>
-                <p><?php echo $text ?></p>
+                <h3><?php echo esc_html($title) ?></h3>
+                <p><?php echo esc_html($text) ?></p>
                 <a href="https://ai-wizard.groupofpeople.net/">Click here to go to your website</a>
             </span>
         </span>
@@ -30,7 +30,7 @@ abstract class Panel_Section {
             <span class="icon">
                 <span class="dashicons dashicons-info-outline is-small"></span>
             </span>
-            <span class="help"><?php echo $text ?></span>
+            <span class="help"><?php echo esc_html($text) ?></span>
         </span>
 		<?php
 	}

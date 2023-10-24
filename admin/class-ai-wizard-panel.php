@@ -19,7 +19,6 @@ class AI_Wizard_Panel {
 	private function enqueue_sections() {
 		$this->sections[] = new Panel_Sections\Enable_Section();
 		$this->sections[] = new Panel_Sections\Introduction_Panel();
-		$this->sections[] = new Panel_Sections\ChatGPT_Settings_Section();
 		$this->sections[] = new Panel_Sections\Request_Settings_Section();
 		$this->sections[] = new Panel_Sections\Notification_Panel();
 	}
@@ -47,7 +46,7 @@ class AI_Wizard_Panel {
 		if($pagenow === 'admin.php' && isset($_GET['page']) && ($_GET['page'] === 'wpcf7' || $_GET['page'] === 'wpcf7-new')){
 			wp_enqueue_script( "ai-wizard-cf7-admin", plugins_url( "/admin/js/ai-wizard-cf7-admin.js", gofpChatGPTFile ), array( 'jquery' ));
 			wp_enqueue_style( "ai-wizard-cf7-admin", plugins_url( "/admin/css/ai-wizard-cf7-admin.css", gofpChatGPTFile ), array() );
-//			wp_enqueue_style( "ai_wizard_bulma_css", plugins_url( "/admin/css/bulma.css", gofpChatGPTFile ), array() );
+			wp_enqueue_style( "ai_wizard_bulma_css", plugins_url( "/admin/css/bulma.css", gofpChatGPTFile ), array() );
 		}
 	}
 
