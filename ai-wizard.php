@@ -35,11 +35,11 @@ use AI_Wizard\Plugin;
  * @return Singleton|Plugin|null Plugin instance
  * @since 1.0.0
  */
-function wp_chatGPT_builder() {
+function AI_Wizard_builder() {
 	// To prevent parse error for PHP prior to 5.3.0.
 //    $class = '\GofP_Grid\Plugin';
 	return Plugin::get_instance();
 }
 
 // Initialize plugin.
-wp_chatGPT_builder();
+AI_Wizard_builder();
