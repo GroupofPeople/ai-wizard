@@ -99,16 +99,18 @@ class Request_Settings_Section extends Panel_Section {
 		<?php
 	}
 
-	public function save_section( $ai_wizard_form, $request_args ) {
-		$request_args = wp_parse_args( $request_args[ self::PREFIX ], array(
+	public function save_section( $ai_wizard_form ) {
+		$request_args = wp_parse_args( $_POST[ self::PREFIX ], array(
 			'prompt-template' => "",
 			'system-prompt'   => "",
 			'response-filter' => "",
 		) );
 
-		$ai_wizard_form->set_prompt( $request_args['prompt-template'] );
-		$ai_wizard_form->set_system_prompt( $request_args['system-prompt'] );
-		$ai_wizard_form->set_response_filter_type( $request_args['response-filter'] );
+		$ai_wizard_form->set_prompt( sanitize_text_field($request_args['prompt-template']) );
+		$ai_wizard_form->set_system_prompt( sanitize_text_field($request_args['system-prompt']) );
+        //validate response-filter
+        $filtered = (in_array($request_args['response-filter'] , array('number', 'text')))? $request_args['response-filter'] : 'text';
+		$ai_wizard_form->set_response_filter_type( $filtered );
 	}
 
 }

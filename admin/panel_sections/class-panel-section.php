@@ -7,7 +7,7 @@ abstract class Panel_Section {
 
 	public abstract function render_section($ai_wizard_form, $post);
 
-	public abstract function save_section( $ai_wizard_form, $request_args );
+	public abstract function save_section( $ai_wizard_form );
 
 	protected function pop_up( $title, $text ) {
 		?>

@@ -10,7 +10,7 @@ class AI_Wizard_Panel {
 
 	public function __construct() {
 		add_filter( 'wpcf7_editor_panels', array( $this, 'add_editor_panel' ) );
-		add_action( 'wpcf7_save_contact_form', array( $this, 'save_contact_form' ), 1, 3 );
+		add_action( 'wpcf7_after_save', array( $this, 'save_contact_form' ),1, 1);
 		add_action( 'deleted_post', array( $this, 'delete_form' ), 1, 2 );
 		add_action( 'admin_enqueue_scripts', array($this, 'enqueue'));
 		$this->enqueue_sections();
@@ -29,13 +29,14 @@ class AI_Wizard_Panel {
 		}
 	}
 
-	public function save_contact_form( $contact_form, $args, $context ) {
-		$post_id = $args['id'];
+
+	public function save_contact_form( $cf7_form ) {
+		$post_id = $cf7_form->id();
 
 		$ai_wizard_form = AI_Wizard_Form::getInstance( $post_id );
 
 		foreach ( $this->sections as $section ) {
-			$section->save_section( $ai_wizard_form, $args );
+			$section->save_section( $ai_wizard_form );
 		}
 	}
 

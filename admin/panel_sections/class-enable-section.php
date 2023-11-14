@@ -25,15 +25,15 @@ class Enable_Section extends Panel_Section {
 		<?php
 	}
 
-	public function save_section( $ai_wizard_form, $request_args ) {
-		$request_args = wp_parse_args( $request_args[ self::PREFIX ], array(
+	public function save_section( $ai_wizard_form ) {
+		$request_args = wp_parse_args( $_POST[ self::PREFIX ], array(
 			'active' => 'off',
 		) );
 
-		if ( $request_args['active'] == 'off' ) {
-			$ai_wizard_form->disable();
-		} else {
+		if ( $request_args['active'] == 'on' ) {
 			$ai_wizard_form->enable();
+		} else {
+			$ai_wizard_form->disable();
 		}
 	}
 }
