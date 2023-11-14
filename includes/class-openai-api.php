@@ -57,29 +57,90 @@ class OpenAI_API {
 			'Authorization' => 'Bearer ' . get_option('AI_Wizard_OpenAI_settings')['AIWizard_OpenAI_settings_api_key'],
 		];
 
-		$requestArgs = [
-			'timeout' => 30,
-			'headers' => $headers,
-			'body' => wp_json_encode($body),
-		];
+		$apiUrl = self::API_URL;
+		$apiKey = get_option('AI_Wizard_OpenAI_settings')['AIWizard_OpenAI_settings_api_key'];
 
-		$response = wp_remote_post(self::API_URL, $requestArgs);
+		$headers = array(
+			'Content-Type: application/json',
+			'Authorization: Bearer ' . $apiKey,
+		);
 
-		if (is_wp_error($response)) {
-			error_log("ERROR wp_remote_post: \n" . print_r($response, true));
-			return false;
-		}
+		//debug
+		ob_start();
 
-		$responseCode = wp_remote_retrieve_response_code($response);
-		$responseBody = wp_remote_retrieve_body($response);
+		$ch1 = curl_init();
+		curl_setopt($ch1, CURLOPT_URL, 'https://api.openai.com/v1/models');
+		curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch1, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch1, CURLOPT_HTTPHEADER, array(
+			'Authorization: Bearer ' . $apiKey,
+		));
+		curl_setopt($ch1, CURLOPT_TIMEOUT, 3);
+
+
+		curl_setopt($ch1, CURLOPT_VERBOSE, true);
+		$out1 = fopen('php://output', 'w');
+		curl_setopt($ch1, CURLOPT_STDERR, $out1);
+
+		fclose($out1);
+		$debug1 = ob_get_clean();
+		error_log("Debug GET: \n".$debug1);
+
+		curl_close($ch1);
+
+
+		//debug
+		ob_start();
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $apiUrl);
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($body));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+
+
+		curl_setopt($ch, CURLOPT_VERBOSE, true);
+		$out = fopen('php://output', 'w');
+		curl_setopt($ch, CURLOPT_STDERR, $out);
+
+		$response = curl_exec($ch);
+		$responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+		fclose($out);
+		$debug = ob_get_clean();
+		error_log("Debug: ".$debug);
+
+		curl_close($ch);
+
+		$my_curl = curl_init(); //new cURL handler
+
+		$my_array=array(
+			CURLOPT_URL =>'https://www.example.com/my_script.php',
+			CURLOPT_POST => true,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_POSTFIELDS    => array(
+				'f_name' => 'Alex',
+				'l_name' => 'John',
+			)
+		);
+		curl_setopt_array($my_curl, $my_array); // use the array
+
+		$return_str= curl_exec($my_curl); // Execute and get data
+		curl_close($my_curl); // close the handler
+
+		echo $return_str;
 
 		if ($responseCode !== 200) {
 			error_log("ERROR API response code: {$responseCode}");
-			error_log("ERROR API response body: {$responseBody}");
+			error_log("ERROR API response body: {$response}");
 			return false;
 		}
 
-		$responseJson = json_decode($responseBody);
+		$responseJson = json_decode($response);
 
 		if (isset($responseJson->error)) {
 			throw new Exception("ERROR OpenAI API: " . $responseJson->error->message);

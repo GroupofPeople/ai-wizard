@@ -25,7 +25,7 @@ class Introduction_Panel extends Panel_Section {
 		<?php
 	}
 
-	public function save_section( $ai_wizard_form, $request_args ) {
+	public function save_section( $ai_wizard_form ) {
 		// Nothing to do here
 	}
 }

@@ -2,7 +2,7 @@
 Contributors: groupofpeople
 Tags: cf7, ai, smart-form, chatGPT, openai
 Requires at least: 4.0
-Tested up to: 4.8
+Tested up to: 6.3
 Stable tag: 1.0.0
 Requires PHP: 5.4
 License: GPLv3 or later

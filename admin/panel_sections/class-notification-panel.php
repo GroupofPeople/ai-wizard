@@ -48,15 +48,15 @@ class Notification_Panel extends Panel_Section {
 		<?php
 	}
 
-	public function save_section( $ai_wizard_form, $request_args ) {
-		$request_args = wp_parse_args( $request_args[ self::PREFIX ], array(
+	public function save_section( $ai_wizard_form ) {
+		$request_args = wp_parse_args( $_POST[ self::PREFIX ], array(
 			'msg-error'   => '',
 			'msg-waiting' => '',
 		) );
 
 		$ai_wizard_form->set_messages( array(
-			'msg-error'   => $request_args['msg-error'],
-			'msg-waiting' => $request_args['msg-waiting'],
+			'msg-error'   => sanitize_text_field($request_args['msg-error']),
+			'msg-waiting' => sanitize_text_field($request_args['msg-waiting']),
 		) );
 	}
 }
