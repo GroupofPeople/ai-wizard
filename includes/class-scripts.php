@@ -1,6 +1,6 @@
 <?php
 
-namespace AI_Wizard\Includes;
+namespace aiwzrd\includes;
 
 class Scripts {
 

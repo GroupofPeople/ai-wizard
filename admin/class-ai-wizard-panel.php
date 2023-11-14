@@ -1,8 +1,8 @@
 <?php
 
-namespace AI_Wizard\Admin;
+namespace aiwzrd\admin;
 
-use AI_Wizard\Includes\AI_Wizard_Form;
+use aiwzrd\includes\AI_Wizard_Form;
 
 class AI_Wizard_Panel {
 

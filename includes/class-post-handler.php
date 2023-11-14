@@ -1,6 +1,6 @@
 <?php
 
-namespace AI_Wizard\Includes;
+namespace aiwzrd\includes;
 
 use WPCF7_Submission;
 

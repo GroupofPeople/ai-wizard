@@ -1,8 +1,9 @@
 <?php
 
-namespace AI_Wizard\Admin\Panel_Sections;
+namespace aiwzrd\admin\panel_sections;
 
-use AI_Wizard\Includes\AI_Wizard_Form;
+
+use aiwzrd\includes\AI_Wizard_Form;
 
 class Enable_Section extends Panel_Section {
 

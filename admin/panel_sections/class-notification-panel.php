@@ -1,6 +1,6 @@
 <?php
 
-namespace AI_Wizard\Admin\Panel_Sections;
+namespace aiwzrd\admin\panel_sections;
 
 class Notification_Panel extends Panel_Section {
 

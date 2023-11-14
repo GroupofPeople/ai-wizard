@@ -18,16 +18,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-const gofpChatGPTFile = __FILE__;
+const aiwzrd_file = __FILE__;
 define( "gofpChatGPTPath", dirname( __FILE__ ) );
-define( "gofpChatGPTURL", plugin_dir_url( gofpChatGPTFile ) );
+define( "gofpChatGPTURL", plugin_dir_url( aiwzrd_file ) );
 
 
 // Include autoloader.
 require_once plugin_dir_path( __FILE__ ) . 'includes/class-autoloader.php';
 
 
-use AI_Wizard\Plugin;
+use aiwzrd\plugin;
 
 /**
  * Get and initialize the plugin instance.
@@ -35,11 +35,11 @@ use AI_Wizard\Plugin;
  * @return Singleton|Plugin|null Plugin instance
  * @since 1.0.0
  */
-function AI_Wizard_builder() {
+function aiwzrd_builder() {
 	// To prevent parse error for PHP prior to 5.3.0.
 //    $class = '\GofP_Grid\Plugin';
 	return Plugin::get_instance();
 }
 
 // Initialize plugin.
-AI_Wizard_builder();
+aiwzrd_builder();

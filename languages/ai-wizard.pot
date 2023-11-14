@@ -1,0 +1,103 @@
+# Copyright (C) 2023 GroupOfPeople-Alex
+# This file is distributed under the GPL3.
+msgid ""
+msgstr ""
+"Project-Id-Version: AI-Wizard 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/AI-Wizard\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-11-14T15:54:04+01:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.1\n"
+"X-Domain: ai-wizard\n"
+
+#. Plugin Name of the plugin
+msgid "AI-Wizard"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://ai-wizard.groupofpeople.net/"
+msgstr ""
+
+#. Description of the plugin
+msgid "AI-Wizard is a powerful WordPress plugin that seamlessly integrates OpenAI's ChatGPT technology with Contact Form 7 (CF7) forms."
+msgstr ""
+
+#. Author of the plugin
+msgid "GroupOfPeople-Alex"
+msgstr ""
+
+#: admin/panel_sections/class-enable-section.php:13
+msgid "Enable ChatGPT extension for this form"
+msgstr ""
+
+#: admin/panel_sections/class-enable-section.php:22
+msgid "Please note that AI Wizard can only be used for one CF7 form in total on your WordPress site. Visit the developer page to receive more information."
+msgstr ""
+
+#: admin/panel_sections/class-introduction-panel.php:9
+msgid "How to use the AI-Wizard:"
+msgstr ""
+
+#: admin/panel_sections/class-introduction-panel.php:12
+msgid "To use the generated answer of ChatGPT use the placeholder: "
+msgstr ""
+
+#: admin/panel_sections/class-notification-panel.php:16
+msgid "An error occurred during OpenAI request"
+msgstr ""
+
+#: admin/panel_sections/class-notification-panel.php:17
+msgid "Message while the response is being generated"
+msgstr ""
+
+#: admin/panel_sections/class-notification-panel.php:21
+msgid "Individual text that is shown to the user when an error occurs while generating an answer."
+msgstr ""
+
+#: admin/panel_sections/class-notification-panel.php:22
+msgid "Individual text that is shown to the user when a response is generated."
+msgstr ""
+
+#: admin/panel_sections/class-notification-panel.php:30
+msgid "Notifications"
+msgstr ""
+
+#: admin/panel_sections/class-request-settings-section.php:10
+msgid "Request Settings"
+msgstr ""
+
+#: admin/panel_sections/class-request-settings-section.php:14
+msgid "In the following fields, you can use these tags:"
+msgstr ""
+
+#: admin/panel_sections/class-request-settings-section.php:38
+msgid "Prompt"
+msgstr ""
+
+#: admin/panel_sections/class-request-settings-section.php:46
+msgid "Enter your user prompt using custom tags to embed user input via tags for a personalized response."
+msgstr ""
+
+#: admin/panel_sections/class-request-settings-section.php:58
+msgid "System Prompt"
+msgstr ""
+
+#: admin/panel_sections/class-request-settings-section.php:64
+msgid "Provide additional context information for the creation of the response by Chat GPT."
+msgstr ""
+
+#: admin/panel_sections/class-request-settings-section.php:77
+msgid "Filter API Response"
+msgstr ""
+
+#: admin/panel_sections/class-request-settings-section.php:86
+msgid "Use complete Text"
+msgstr ""
+
+#: admin/panel_sections/class-request-settings-section.php:94
+msgid "Use First number of Response"
+msgstr ""

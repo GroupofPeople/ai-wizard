@@ -1,11 +1,11 @@
 <?php
 
-namespace AI_Wizard;
+namespace aiwzrd;
 
-use AI_Wizard\Admin\AI_Wizard_Panel;
-use AI_Wizard\Admin\Settings_Page;
-use AI_Wizard\Includes\Post_Handler;
-use AI_Wizard\Includes\Scripts;
+use aiwzrd\admin\AI_Wizard_Panel;
+use aiwzrd\admin\Settings_Page;
+use aiwzrd\includes\Post_Handler;
+use aiwzrd\includes\Scripts;
 
 class Plugin {
 

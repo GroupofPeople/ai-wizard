@@ -1,6 +1,6 @@
 <?php
 
-namespace AI_Wizard\Admin\Panel_Sections;
+namespace aiwzrd\admin\panel_sections;
 
 abstract class Panel_Section {
     const PREFIX = "ai-wizard";

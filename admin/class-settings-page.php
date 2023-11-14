@@ -1,6 +1,6 @@
 <?php
 
-namespace AI_Wizard\Admin;
+namespace aiwzrd\admin;
 
 
 class Settings_Page {
