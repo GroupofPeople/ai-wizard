@@ -10,7 +10,7 @@ class AI_Wizard_Panel {
 
 	public function __construct() {
 		add_filter( 'wpcf7_editor_panels', array( $this, 'add_editor_panel' ) );
-		add_action( 'wpcf7_after_save', array( $this, 'save_contact_form' ),1, 1);
+		add_action( 'wpcf7_after_save', array( $this, 'save_contact_form' ),1);
 		add_action( 'deleted_post', array( $this, 'delete_form' ), 1, 2 );
 		add_action( 'admin_enqueue_scripts', array($this, 'enqueue'));
 		$this->enqueue_sections();
@@ -45,9 +45,9 @@ class AI_Wizard_Panel {
 		global $pagenow;
 
 		if($pagenow === 'admin.php' && isset($_GET['page']) && ($_GET['page'] === 'wpcf7' || $_GET['page'] === 'wpcf7-new')){
-			wp_enqueue_script( "ai-wizard-cf7-admin", plugins_url( "/admin/js/ai-wizard-cf7-admin.js", gofpChatGPTFile ), array( 'jquery' ));
-			wp_enqueue_style( "ai-wizard-cf7-admin", plugins_url( "/admin/css/ai-wizard-cf7-admin.css", gofpChatGPTFile ), array() );
-			wp_enqueue_style( "ai_wizard_bulma_css", plugins_url( "/admin/css/bulma.css", gofpChatGPTFile ), array() );
+			wp_enqueue_script( "ai-wizard-cf7-admin", plugins_url( "/admin/js/ai-wizard-cf7-admin.js", aiwzrd_file ), array( 'jquery' ));
+			wp_enqueue_style( "ai-wizard-cf7-admin", plugins_url( "/admin/css/ai-wizard-cf7-admin.css", aiwzrd_file ), array() );
+			wp_enqueue_style( "ai_wizard_bulma_css", plugins_url( "/admin/css/bulma.css", aiwzrd_file ), array() );
 		}
 	}
 

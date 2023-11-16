@@ -35,6 +35,7 @@ class Plugin {
 
 		new AI_Wizard_Panel();
 		new Settings_Page();
+
 	}
 
 	public function init_frontend() {

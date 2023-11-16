@@ -52,11 +52,6 @@ class OpenAI_API {
 			$body->max_tokens = $args['max-tokens'];
 		}
 
-		$headers = [
-			'Content-Type' => 'application/json',
-			'Authorization' => 'Bearer ' . get_option('AI_Wizard_OpenAI_settings')['AIWizard_OpenAI_settings_api_key'],
-		];
-
 		$apiUrl = self::API_URL;
 		$apiKey = get_option('AI_Wizard_OpenAI_settings')['AIWizard_OpenAI_settings_api_key'];
 
@@ -66,31 +61,7 @@ class OpenAI_API {
 		);
 
 		//debug
-		ob_start();
-
-		$ch1 = curl_init();
-		curl_setopt($ch1, CURLOPT_URL, 'https://api.openai.com/v1/models');
-		curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch1, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($ch1, CURLOPT_HTTPHEADER, array(
-			'Authorization: Bearer ' . $apiKey,
-		));
-		curl_setopt($ch1, CURLOPT_TIMEOUT, 3);
-
-
-		curl_setopt($ch1, CURLOPT_VERBOSE, true);
-		$out1 = fopen('php://output', 'w');
-		curl_setopt($ch1, CURLOPT_STDERR, $out1);
-
-		fclose($out1);
-		$debug1 = ob_get_clean();
-		error_log("Debug GET: \n".$debug1);
-
-		curl_close($ch1);
-
-
-		//debug
-		ob_start();
+//		ob_start();
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $apiUrl);
@@ -99,45 +70,30 @@ class OpenAI_API {
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 20);
 
 
-		curl_setopt($ch, CURLOPT_VERBOSE, true);
-		$out = fopen('php://output', 'w');
-		curl_setopt($ch, CURLOPT_STDERR, $out);
+//		curl_setopt($ch, CURLOPT_VERBOSE, true);
+//		$out = fopen('php://output', 'w');
+//		curl_setopt($ch, CURLOPT_STDERR, $out);
 
 		$response = curl_exec($ch);
 		$responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-		fclose($out);
-		$debug = ob_get_clean();
-		error_log("Debug: ".$debug);
+//		fclose($out);
+//		$debug = ob_get_clean();
+//		error_log("Debug: ".$debug);
+//		error_log("Status Code: ".$responseCode);
+
+		if (curl_error($ch) !== '') {
+			error_log("Hilfe");
+			throw new Exception(curl_error($ch));
+		}
 
 		curl_close($ch);
 
-		$my_curl = curl_init(); //new cURL handler
-
-		$my_array=array(
-			CURLOPT_URL =>'https://www.example.com/my_script.php',
-			CURLOPT_POST => true,
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_FOLLOWLOCATION => true,
-			CURLOPT_POSTFIELDS    => array(
-				'f_name' => 'Alex',
-				'l_name' => 'John',
-			)
-		);
-		curl_setopt_array($my_curl, $my_array); // use the array
-
-		$return_str= curl_exec($my_curl); // Execute and get data
-		curl_close($my_curl); // close the handler
-
-		echo $return_str;
-
 		if ($responseCode !== 200) {
-			error_log("ERROR API response code: {$responseCode}");
-			error_log("ERROR API response body: {$response}");
-			return false;
+			throw new Exception();
 		}
 
 		$responseJson = json_decode($response);

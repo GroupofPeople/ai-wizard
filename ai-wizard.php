@@ -13,22 +13,23 @@
 
 // Exit if accessed directly.
 
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 
 const aiwzrd_file = __FILE__;
-define( "gofpChatGPTPath", dirname( __FILE__ ) );
-define( "gofpChatGPTURL", plugin_dir_url( aiwzrd_file ) );
+define( "aiwzrd_Path", dirname( __FILE__ ) );
+define( "aiwzrd_URL", plugin_dir_url( aiwzrd_file ) );
 
 
 // Include autoloader.
 require_once plugin_dir_path( __FILE__ ) . 'includes/class-autoloader.php';
 
 
-use aiwzrd\plugin;
 
+use aiwzrd\Plugin;
 /**
  * Get and initialize the plugin instance.
  *
@@ -37,7 +38,6 @@ use aiwzrd\plugin;
  */
 function aiwzrd_builder() {
 	// To prevent parse error for PHP prior to 5.3.0.
-//    $class = '\GofP_Grid\Plugin';
 	return Plugin::get_instance();
 }
 
