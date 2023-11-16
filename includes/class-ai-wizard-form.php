@@ -209,24 +209,8 @@ class AI_Wizard_Form {
 			'system-prompt'     => $this->system_prompt,
 			'response-filter'   => $this->response_filter,
 		);
-		$caller         = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 2 )[1];
-		$callerFunction = $caller['function'];
-		$callerClass    = isset( $caller['class'] ) ? $caller['class'] : '';
-		$callerFile     = $caller['file'];
-		$callerLine     = $caller['line'];
-
-		error_log( "Caller function: {$callerFunction}" );
-		error_log( "Caller class: {$callerClass}" );
-		error_log( "Caller file: {$callerFile}" );
-		error_log( "Caller line: {$callerLine}" );
-		$startTime = microtime( true );
 
 		update_post_meta( $this->form_id, self::$METADATA_KEY_SETTINGS, $settings );
-
-		$endTime       = microtime( true );
-		$executionTime = $endTime - $startTime;
-
-		error_log( 'update_post_meta time: ' . $executionTime );
 	}
 
 	/**

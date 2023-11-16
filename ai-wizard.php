@@ -33,11 +33,10 @@ use aiwzrd\Plugin;
 /**
  * Get and initialize the plugin instance.
  *
- * @return Singleton|Plugin|null Plugin instance
+ * @return Plugin|null Plugin instance
  * @since 1.0.0
  */
 function aiwzrd_builder() {
-	// To prevent parse error for PHP prior to 5.3.0.
 	return Plugin::get_instance();
 }
 

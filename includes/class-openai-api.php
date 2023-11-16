@@ -61,7 +61,6 @@ class OpenAI_API {
 		);
 
 		//debug
-//		ob_start();
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $apiUrl);
@@ -72,21 +71,10 @@ class OpenAI_API {
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 20);
 
-
-//		curl_setopt($ch, CURLOPT_VERBOSE, true);
-//		$out = fopen('php://output', 'w');
-//		curl_setopt($ch, CURLOPT_STDERR, $out);
-
 		$response = curl_exec($ch);
 		$responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-//		fclose($out);
-//		$debug = ob_get_clean();
-//		error_log("Debug: ".$debug);
-//		error_log("Status Code: ".$responseCode);
-
 		if (curl_error($ch) !== '') {
-			error_log("Hilfe");
 			throw new Exception(curl_error($ch));
 		}
 
