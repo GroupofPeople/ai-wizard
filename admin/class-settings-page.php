@@ -1,6 +1,6 @@
 <?php
 
-namespace AI_Wizard\Admin;
+namespace aiwzrd\admin;
 
 
 class Settings_Page {
@@ -26,7 +26,7 @@ class Settings_Page {
             <form action='options.php' method='post'>
 				<?php settings_fields( 'AI_Wizard_options' ); ?>
 
-                <h2><?php echo __( 'OpenAI Settings', 'AI_Wizard_Settings' ) ?></h2>
+                <h2><?php esc_html_e( 'OpenAI Settings', 'AI_Wizard_Settings' ) ?></h2>
                 <table class="form-table">
                     <tbody>
                     <tr>

@@ -1,6 +1,6 @@
 <?php
 
-namespace AI_Wizard\Includes;
+namespace aiwzrd\includes;
 
 use ErrorException;
 
@@ -60,21 +60,6 @@ class AI_Wizard_Form {
 
 			return $instance;
 		}
-		if ( $form_id == - 1 ) {
-			global $wpdb;
-
-			$query = "SELECT ID FROM $wpdb->posts ORDER BY ID DESC LIMIT 0,1";
-
-			$result  = $wpdb->get_results( $query );
-			$row     = $result[0];
-			$id      = $row->ID;
-			$post_id = $id + 1;
-
-			$instance = new self();
-			$instance->set_defaults();
-
-			return $instance;
-		}
 
 		if ( ! get_post_status( $form_id ) ) {
 			//ToDo: Exception
@@ -102,7 +87,7 @@ class AI_Wizard_Form {
 		$this->chat_gpt_settings = array(
 			'temp'            => 1,
 			'top-p'           => 1,
-			'max-tokens-bool' => 'off', //ToDo check if it is useful als on off or bool
+			'max-tokens-bool' => 'off', //ToDo check if it is useful as on off or bool
 			'max-tokens'      => 4096,
 		);
 		$this->prompt            = '';
@@ -313,11 +298,4 @@ class AI_Wizard_Form {
 		$this->update_metadata_settings();
 	}
 
-	/**
-	 * @param mixed $regex
-	 */
-	public function set_response_filter_regex( $regex ) {
-		$this->response_filter['custom-regex'] = $regex;
-		$this->update_metadata_settings();
-	}
 }

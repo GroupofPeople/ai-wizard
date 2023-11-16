@@ -1,6 +1,6 @@
 <?php
 
-namespace AI_Wizard\Admin\Panel_Sections;
+namespace aiwzrd\admin\panel_sections;
 
 class Notification_Panel extends Panel_Section {
 
@@ -32,12 +32,12 @@ class Notification_Panel extends Panel_Section {
             <fieldset>
 				<?php foreach ( $messages as $key => $message ) { ?>
                     <div class="field ">
-                        <label class="label" for="<?php echo self::PREFIX . '-' . $key; ?>">
+                        <label class="label" for="<?php echo esc_html(self::PREFIX . '-' . $key); ?>">
 							<?php echo esc_html( $this->descriptions[ $key ] ); ?>
                         </label>
                         <div class="control">
-                            <input id="<?php echo self::PREFIX . '-' . $key; ?>"
-                                   name="<?php echo self::PREFIX . '[' . $key . ']'; ?>"
+                            <input id="<?php echo esc_html(self::PREFIX . '-' . $key); ?>"
+                                   name="<?php echo esc_html(self::PREFIX . '[' . $key . ']'); ?>"
                                    class="input" value="<?php echo esc_attr($message); ?>">
                         </div>
 						<?php $this->tool_tip( $this->tool_tips[ $key ] ); ?>

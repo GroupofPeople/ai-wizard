@@ -1,6 +1,6 @@
 <?php
 
-namespace AI_Wizard\Includes;
+namespace aiwzrd\includes;
 
 class Scripts {
 
@@ -11,12 +11,12 @@ class Scripts {
 	}
 
 	private function register_scripts() {
-		wp_register_script( "ai_wizard_form_js", false );
+		wp_register_script( "ai_wizard_form_js", false , array('jquery'));
 		wp_register_script( "ai_wizard_error_form_js", false );
 	}
 
 	private function register_styles() {
-		wp_register_style( "ai_wizard_form_css", plugins_url( "/includes/css/chatgpt-form.css", gofpChatGPTFile ), array(), null );
+		wp_register_style( "ai_wizard_form_css", plugins_url( "/includes/css/chatgpt-form.css", aiwzrd_file ), array(), null );
 	}
 
 	public function custom_shortcode_scripts() {
@@ -31,64 +31,33 @@ class Scripts {
 				if ( ! isset( $atts['id'] ) ) {
 					continue;
 				}
-				if ( get_post_meta( $atts['id'], 'chatgpt_is_active', true ) ) {
+				$aiwzrd_form = AI_Wizard_Form::getInstance($atts['id']);
+				if( $aiwzrd_form->is_enabled()){
 					wp_enqueue_script( 'ai_wizard_form_js' );
-					$script = $this->generate_form_scripts($atts['id']);
+					$script = $this->generate_form_scripts($aiwzrd_form);
 					wp_add_inline_script( "ai_wizard_form_js", $script);
-					$script = $this->generate_error_message_script($atts['id']);
-					wp_add_inline_script( "ai_wizard_error_form_js", $script);
 					wp_enqueue_style( 'ai_wizard_form_css' );
 				}
 			}
 		}
 	}
 
-	private function generate_form_scripts($form_id){
-		$waiting_message_script = $this->generate_waiting_message_script($form_id);
-		$error_message_script = $this->generate_error_message_script($form_id);
-
+	private function generate_form_scripts($form){
+		$waiting_message_script = $this->generate_waiting_message_script($form);
 		return "
 			(function ($) {
 				$( document ).ready(function() {
+					console.log('Hello');
 					$waiting_message_script
-					$error_message_script
 				});
 			})(jQuery)";
 	}
 
-	private function generate_waiting_message_script($form_id){
-		$data = get_post_meta( $form_id, 'request_settings', true );
-		$waiting_message = esc_html($data['messages']['msg-waiting']);
+	private function generate_waiting_message_script($form){
+		$data = $form->get_messages();
+		$waiting_message = esc_html($data['msg-waiting']);
 
-		return "$('<span id=\"ai-wizard-waiting-message\">$waiting_message</span>').insertAfter('span.wpcf7-spinner');
-				";
-
-	}
-
-	private function generate_error_message_script($form_id){
-		$data = get_post_meta( $form_id, 'request_settings', true );
-		$error_message = esc_html($data['messages']['msg-error']);
-
-		return "const { fetch: originalFetch } = window;
-window.fetch = async (...args) => {
-  let [resource, config] = args;
-  let response = await originalFetch(resource, config);
-  if (!response.ok && response.status === 500) {
-    // 404 error handling
-    const collection = document.getElementsByClassName('wpcf7-form');
-    if( typeof collection[0] !== 'undefined' ){
-        collection[0].classList.remove('submitting');
-        collection[0].classList.add('failed');
-        collection[0].setAttribute('data-status', 'failed');
-    }
-    const responseOutput = document.getElementsByClassName('wpcf7-response-output');
-    if( typeof responseOutput[0] !== 'undefined' ){
-        responseOutput[0].innerHTML = '$error_message' ;
-    }
-  }
-  return response;
-};";
-
+		return "$('<span id=\"ai-wizard-waiting-message\">$waiting_message</span>').insertAfter('span.wpcf7-spinner');";
 	}
 
 	private function extract_atts_form_shortcode( $shortcode ) {
@@ -106,7 +75,6 @@ window.fetch = async (...args) => {
 			}
 		}
 
-// Return the array
 		return $attributes;
 	}
 }
