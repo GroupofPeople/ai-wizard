@@ -31,7 +31,15 @@ class Scripts {
 				if ( ! isset( $atts['id'] ) ) {
 					continue;
 				}
-				$aiwzrd_form = AI_Wizard_Form::getInstance($atts['id']);
+				$id = $atts['id'];
+
+				//check if new id hash is used in shortcode
+				if (!ctype_digit(trim($atts['id']))){
+					$contact_form = wpcf7_get_contact_form_by_hash( $id );
+					$id = $contact_form->id();
+				}
+
+				$aiwzrd_form = AI_Wizard_Form::getInstance($id);
 				if( $aiwzrd_form->is_enabled()){
 					wp_enqueue_script( 'ai_wizard_form_js' );
 					$script = $this->generate_form_scripts($aiwzrd_form);
