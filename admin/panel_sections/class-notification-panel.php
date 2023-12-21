@@ -49,10 +49,16 @@ class Notification_Panel extends Panel_Section {
 	}
 
 	public function save_section( $ai_wizard_form ) {
-		$request_args = wp_parse_args( $_POST[ self::PREFIX ], array(
+		$request_args = array(
 			'msg-error'   => '',
 			'msg-waiting' => '',
-		) );
+		);
+
+		foreach ($request_args as $key => $value){
+			if(isset($_POST[ self::PREFIX ][$key])){
+				$request_args[$key] = sanitize_text_field($_POST[ self::PREFIX ][$key]);
+			}
+		}
 
 		$ai_wizard_form->set_messages( array(
 			'msg-error'   => sanitize_text_field($request_args['msg-error']),

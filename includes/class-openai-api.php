@@ -13,81 +13,70 @@ class OpenAI_API {
 		if ( is_null( static::$instance ) ) {
 			static::$instance = new static();
 		}
+
 		return static::$instance;
 	}
-
 
 	/**
 	 * @throws Exception
 	 */
-	public function call($prompt, $system, $args = []) {
+	public function call( $prompt, $system, $args = [] ) {
 		$defaultArgs = [
 			'temp' => 0.3,
 		];
 
-		$args = array_merge($defaultArgs, $args);
+		$args = array_merge( $defaultArgs, $args );
 
 		$messages = [
 			(object) [
-				'role' => 'system',
+				'role'    => 'system',
 				'content' => $system,
 			],
 			(object) [
-				'role' => 'user',
+				'role'    => 'user',
 				'content' => $prompt,
 			],
 		];
 
 		$body = (object) [
-			'model' => 'gpt-3.5-turbo',
-			'messages' => $messages,
+			'model'       => 'gpt-3.5-turbo',
+			'messages'    => $messages,
 			'temperature' => (float) $args['temp'],
 		];
 
-		if (isset($args['top-p'])) {
+		if ( isset( $args['top-p'] ) ) {
 			$body->top_p = (float) $args['top-p'];
 		}
 
-		if (isset($args['max_tokens']) && $args['max_tokens'] !== 'off' && isset($args['max-tokens'])) {
+		if ( isset( $args['max_tokens'] ) && $args['max_tokens'] !== 'off' && isset( $args['max-tokens'] ) ) {
 			$body->max_tokens = $args['max-tokens'];
 		}
 
 		$apiUrl = self::API_URL;
-		$apiKey = get_option('AI_Wizard_OpenAI_settings')['AIWizard_OpenAI_settings_api_key'];
+		$apiKey = get_option( 'AI_Wizard_OpenAI_settings' )['AIWizard_OpenAI_settings_api_key'];
 
 		$headers = array(
-			'Content-Type: application/json',
-			'Authorization: Bearer ' . $apiKey,
+			'content-type' => 'application/json',
+			'Authorization' => ' Bearer ' . $apiKey,
 		);
 
-		//debug
+		$args = array(
+			'body'    => wp_json_encode( $body ),
+			'timeout' => 300,
+			'headers' => $headers,
+		);
 
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $apiUrl);
-		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($body));
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 300);
+		$response = wp_remote_post( $apiUrl, $args );
 
-		$response = curl_exec($ch);
-		$responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-		if (curl_error($ch) !== '') {
-			throw new Exception(curl_error($ch));
+		if ( is_wp_error( $response ) ) {
+			$error_message = $response->get_error_message();
+			throw new Exception( $error_message );
 		}
 
-		curl_close($ch);
+		$responseJson = json_decode( wp_remote_retrieve_body( $response ) );
 
-		if ($responseCode !== 200) {
-			throw new Exception();
-		}
-
-		$responseJson = json_decode($response);
-
-		if (isset($responseJson->error)) {
-			throw new Exception("ERROR OpenAI API: " . $responseJson->error->message);
+		if ( isset( $responseJson->error ) ) {
+			throw new Exception( "ERROR OpenAI API: " . $responseJson->error->message );
 		}
 
 		return $responseJson->choices[0]->message->content;

@@ -25,7 +25,13 @@ AI-Wizard is a powerful WordPress plugin that seamlessly integrates OpenAI's Cha
 7. Select the filter for AI responses to match your website's needs.
 8. Test your CF7 form with the AI-Wizard integration to ensure everything is functioning as expected.
 
-a
+== Open AI ==
+
+AI Wizard utilizes the API from [OpenAI](https://beta.openai.com).
+This plugin does not gather any information from your OpenAI account.
+The data transmitted to the OpenAI servers primarily consists of the Prompt and the context you specify.
+To see how much tokens were utilized check your usage on the [OpenAI website](https://platform.openai.com/account/usage) for accurate information.
+Please also review their [Privacy Policy](https://openai.com/privacy/) and [Terms of Service](https://openai.com/terms/) for further information.
 
 == Installation ==
 

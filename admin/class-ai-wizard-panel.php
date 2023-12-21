@@ -97,7 +97,67 @@ class AI_Wizard_Panel {
 				echo '</div>';
 			}
 		}
-		echo $this->minify_html( ob_get_clean() );
+
+		$allowed_tags = array(
+			'fieldset' => array(
+				'class' => array()
+			),
+			'label' => array(
+				'for' => array(),
+				'class' => array(),
+			),
+			'input' => array(
+				'type' => array(),
+				'name' => array(),
+				'id' => array(),
+				'checked' => array(),
+				'value' => array(),
+				'class' => array(),
+			),
+			'span' => array(
+				'class' => array(),
+				'style' => array(),
+			),
+			'div' => array(
+				'class' => array(),
+				'style' => array(),
+			),
+			'h3' => array(),
+			'h2' => array(),
+			'ol' => array(),
+			'li' => array(),
+			'section' => array(
+				'class' => array()
+			),
+			'table' => array(
+				'class' => array()
+			),
+			'tbody' => array(),
+			'tr' => array(),
+			'th' => array(
+				'scope' => array()
+			),
+			'td' => array(),
+			'textarea' => array(
+				'id' => array(),
+				'name' => array(),
+				'class' => array()
+			),
+			'br' => array(),
+			'strong' => array(),
+			'legend' => array(),
+			'select' => array(
+				'name' => array(),
+				'id' => array()
+			),
+			'option' => array(
+				'value' => array()
+			)
+			// Add more tags as needed
+		) ;
+		$html = $this->minify_html( ob_get_clean());
+
+		echo wp_kses( $html , $allowed_tags);
 
 	}
 

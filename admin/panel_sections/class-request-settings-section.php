@@ -100,11 +100,17 @@ class Request_Settings_Section extends Panel_Section {
 	}
 
 	public function save_section( $ai_wizard_form ) {
-		$request_args = wp_parse_args( $_POST[ self::PREFIX ], array(
+		$request_args = array(
 			'prompt-template' => "",
 			'system-prompt'   => "",
 			'response-filter' => "",
-		) );
+		);
+
+        foreach ($request_args as $key => $value){
+            if(isset($_POST[ self::PREFIX ][$key])){
+                $request_args[$key] = sanitize_text_field($_POST[ self::PREFIX ][$key]);
+            }
+        }
 
 		$ai_wizard_form->set_prompt( sanitize_text_field($request_args['prompt-template']) );
 		$ai_wizard_form->set_system_prompt( sanitize_text_field($request_args['system-prompt']) );
